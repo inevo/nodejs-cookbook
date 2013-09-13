@@ -65,6 +65,11 @@ ruby_block "verify_sha_sum" do
     not_if { !node['nodejs']['check_sha'] or install_not_needed }
 end
 
+directory destination_dir do
+  action :create
+  not_if { install_not_needed }
+end
+
 # One hopes that we can trust the contents of the node tarball not to overwrite anything it shouldn't!
 execute "install package to system" do
     command <<-EOF
